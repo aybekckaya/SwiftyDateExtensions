@@ -6,7 +6,43 @@ final class SwiftyDateExtensionsTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(SwiftyDateExtensions().text, "Hello, World!")
+        //XCTAssertEqual(SwiftyDateExtensions().text, "Hello, World!")
+    }
+    
+    func testUsage() {
+        var date: Date
+        
+        date = Date(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0)!
+        print(date.toString(with: "dd MM yyyy HH:mm:ss"))
+        
+        date = Date(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0)!
+        let gmtDate = date.toGMTFromLocal()
+        print(gmtDate.toString(with: "dd MM yyyy HH:mm:ss"))
+        
+        date = Date(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0)!
+        let localTime = date.toLocalFromGMT()
+        print(localTime.toString(with: "dd MM yyyy HH:mm:ss"))
+        
+        date = Date(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0)!
+        let newYork = date.convertToTimeZone(Zones.americaNewYork.toTimezone())
+        print(newYork.toString(with: "dd MM yyyy HH:mm:ss"))
+        
+        
+        date = Date(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0)!
+        let nextSaturday = date.next(WeekDay.saturday)
+        print(nextSaturday.toString(with: "dd MM yyyy HH:mm:ss"))
+        let previousWednesday = date.previous(WeekDay.wednesday)
+        print(previousWednesday.toString(with: "dd MM yyyy HH:mm:ss"))
+        
+        date = Date(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0)!
+        print("Day: \(date.day), hour: \(date.hour), weekday: \(date.weekDay)")
+        
+        date = Date(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0)! + 2.hours + 2.minutes
+        print(date.toString(with: "dd MM yyyy HH:mm:ss"))
+        
+        date = Date(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0)! - 2.months - 3.minutes
+        print(date.toString(with: "dd MM yyyy HH:mm:ss"))
+        
     }
     
     func testDateExtensions() {
@@ -17,6 +53,7 @@ final class SwiftyDateExtensionsTests: XCTestCase {
         var dateText: String
         
         date = Date(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0)!
+        print(date.toString(with: "dd MM yyyy HH:mm:ss"))
         print("TimeZone : \(TimeZone.current), secondsDiff: \(TimeZone.current.secondsFromGMT())")
         resDate = date.toGMTFromLocal()
         print("Date New : \(resDate), Date: \(date)")
@@ -48,36 +85,36 @@ final class SwiftyDateExtensionsTests: XCTestCase {
         resDate = date.convertToTimeZone(Zones.americaNewYork.toTimezone())
         XCTAssert(resDate.hour == 5, "Curr: \(resDate.hour)")
         
-        date = Date(year: 2021, month: 7, day: 13, hour: 12, minute: 21, second: 3)
+        date = Date(year: 2021, month: 7, day: 13, hour: 12, minute: 21, second: 3)!
         XCTAssert(date != nil, "Date should not be nil")
         
-        XCTAssert(date!.day == 13, "Curr : \(date!.day)")
-        XCTAssert(date!.month == 7, "Curr: \(date!.month)")
-        XCTAssert(date!.second == 3, "Curr: \(date!.second)")
+        XCTAssert(date.day == 13, "Curr : \(date.day)")
+        XCTAssert(date.month == 7, "Curr: \(date.month)")
+        XCTAssert(date.second == 3, "Curr: \(date.second)")
         
-        resultDate = date! + 1.days
+        resultDate = date + 1.days
         XCTAssert(resultDate != nil)
         XCTAssert(resultDate!.day == 14, "Curr : \(resultDate!.day)")
         XCTAssert(resultDate!.month == 7, "Curr: \(resultDate!.month)")
         
-        resultDate = date! + 1.days - 3.days
+        resultDate = date + 1.days - 3.days
         XCTAssert(resultDate != nil)
         XCTAssert(resultDate!.day == 11, "Curr : \(resultDate!.day)")
         XCTAssert(resultDate!.month == 7, "Curr: \(resultDate!.month)")
     
-        diff = resultDate! - date!
+        diff = resultDate! - date
         XCTAssert(diff.day == -2, "Curr: \(diff.day)")
         
-       date = Date(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0)
-        dateText = date!.toString(with: "dd MM yyyy HH:mm:ss")
+       date = Date(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0)!
+        dateText = date.toString(with: "dd MM yyyy HH:mm:ss")
         XCTAssert(dateText == "01 01 2000 12:00:00", "Curr: \(dateText)")
         
         // Europe / Istanbul timezone
         date = Date(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0)!
-        resultDate = date!.toGMTFromLocal()
+        resultDate = date.toGMTFromLocal()
         XCTAssert(resultDate!.hour == 9, "Curr : \(resultDate!.hour)" )
         
-        resultDate = date!.toLocalFromGMT()
+        resultDate = date.toLocalFromGMT()
         XCTAssert(resultDate!.hour == 15, "Curr :\(resultDate!.hour)")
     }
 
