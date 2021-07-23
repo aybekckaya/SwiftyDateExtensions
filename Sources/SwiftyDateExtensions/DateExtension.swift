@@ -13,7 +13,7 @@ public enum WeekDay: Int {
     
     var title: String {
         switch self {
-        case .friday: return "Friday"
+        case .friday: return "Friday "
         case .monday: return "Monday"
         case .saturday: return "Saturday"
         case .sunday: return "Sunday"
